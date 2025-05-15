@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Процедурный подход</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .calculator {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        margin: 20px 0;
+      }
+      #display {
+        font-size: 24px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 3px;
+      }
+      .expression {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 5px;
+        min-height: 24px;
+        padding: 5px 10px;
+      }
+      #history {
+        margin-top: 20px;
+        padding: 10px;
+        background: #f9f9f9;
+        border-radius: 3px;
+        min-height: 100px;
+      }
+      .history-item {
+        padding: 5px;
+        margin: 2px 0;
+        border-radius: 3px;
+      }
+      .history-item.add {
+        color: #2ecc71;
+      }
+      .history-item.subtract {
+        color: #e74c3c;
+      }
+      .history-item.multiply {
+        color: #3498db;
+      }
+      .history-item.divide {
+        color: #9b59b6;
+      }
+      .history-item.error {
+        color: #e74c3c;
+        font-weight: bold;
+      }
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 10px 0;
+      }
+      button {
+        padding: 10px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #f0f0f0;
+      }
+      input {
+        padding: 10px;
+        margin: 5px;
+        width: 100px;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/index.html" class="back-link">← Назад к списку</a>
+    <h1>Процедурный подход</h1>
+    <div class="calculator">
+      <div id="expression" class="expression"></div>
+      <div id="display">0</div>
+   
+      <div class="buttons">
+        <button id="num7">7</button>
+        <button id="num8">8</button>
+        <button id="num9">9</button>
+        <button id="divideButton">/</button>
+        <button id="num4">4</button>
+        <button id="num5">5</button>
+        <button id="num6">6</button>
+        <button id="subtractButton">-</button>
+        <button id="num1">1</button>
+        <button id="num2">2</button>
+        <button id="num3">3</button>
+        <button id="addButton">+</button>
+        <button id="num0">0</button>
+        <button id="clearButton">C</button>
+        <button id="equalsButton">=</button>
+        <button id="multiplyButton">*</button>
+
+      </div>
+      <div id="history"></div>
+    </div>
+
+    <div class="calculator">
+      <div id="expression" class="expression"></div>
+      <div id="display">0</div>
+   
+      <div class="buttons">
+        <button id="num7">7</button>
+        <button id="num8">8</button>
+        <button id="num9">9</button>
+        <button id="divideButton">/</button>
+        <button id="num4">4</button>
+        <button id="num5">5</button>
+        <button id="num6">6</button>
+        <button id="subtractButton">-</button>
+        <button id="num1">1</button>
+        <button id="num2">2</button>
+        <button id="num3">3</button>
+        <button id="addButton">+</button>
+        <button id="num0">0</button>
+        <button id="clearButton">C</button>
+        <button id="equalsButton">=</button>
+        <button id="multiplyButton">*</button>
+
+      </div>
+      <div id="history"></div>
+    </div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html> 
