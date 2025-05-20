@@ -9,7 +9,10 @@ import { CalculatorHistory } from "./calculator-history";
 import { CalculatorModel } from "./calculator-model";
 import { AddButton } from "./operators/AddOperator";
 import { CosButton } from "./operators/CosOperator";
+import { SinButton } from "./operators/SinOperator";
 import { DivideButton } from "./operators/DivideOperator";
+import { ModButton } from "./operators/ModOperator";
+import { FactorialButton } from "./operators/FactorialOperator";
 import { MultiplyButton } from "./operators/MultiplyOperator";
 import { PowButton } from "./operators/PowOperator";
 import { SubscractButton } from "./operators/SubscractOperator";
@@ -36,28 +39,31 @@ class Calculator {
     /* prettier-ignore */
     this.buttons = [
       // 1 row
-      new NumberButton("7", this.model),
-      new NumberButton("8", this.model),
-      new NumberButton("9", this.model),
-      new DivideButton(this.model),
-      // 2 row
-      new NumberButton("4", this.model),
-      new NumberButton("5", this.model),
-      new NumberButton("6", this.model),
-      new MultiplyButton(this.model),
-      // 3 row
       new NumberButton("1", this.model),
       new NumberButton("2", this.model),
       new NumberButton("3", this.model),
       new SubscractButton(this.model),
+      // 2 row
+      new NumberButton("4", this.model),
+      new NumberButton("5", this.model),
+      new NumberButton("6", this.model),
+      new AddButton(this.model),
+      // 3 row
+      new NumberButton("7", this.model),
+      new NumberButton("8", this.model),
+      new NumberButton("9", this.model),
+      new DivideButton(this.model),
       // 4 row
       new NumberButton("0", this.model),
-      new ClearButton(this.model),
-      new ProcessButton(this.model),
-      new AddButton(this.model),
+      new CosButton(this.model),
+      new SinButton(this.model),
+      new MultiplyButton(this.model),
       // 5 row
       new PowButton(this.model),
-      new CosButton(this.model)
+      new ModButton(this.model),
+      new ClearButton(this.model),
+      new ProcessButton(this.model),
+      new FactorialButton(this.model),
     ];
 
     this.root = this.createRoot();
