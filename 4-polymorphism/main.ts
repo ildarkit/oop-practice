@@ -13,6 +13,7 @@ import { SinButton } from "./operators/SinOperator";
 import { DivideButton } from "./operators/DivideOperator";
 import { ModButton } from "./operators/ModOperator";
 import { FactorialButton } from "./operators/FactorialOperator";
+import { LogButton } from "./operators/LogOperator";
 import { MultiplyButton } from "./operators/MultiplyOperator";
 import { PowButton } from "./operators/PowOperator";
 import { SubscractButton } from "./operators/SubscractOperator";
@@ -63,7 +64,9 @@ class Calculator {
       new ModButton(this.model),
       new ClearButton(this.model),
       new ProcessButton(this.model),
+      // 6 row
       new FactorialButton(this.model),
+      new LogButton(this.model),
     ];
 
     this.root = this.createRoot();
