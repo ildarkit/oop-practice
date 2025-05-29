@@ -1,25 +1,29 @@
-import { CalculatorButton } from "./button/calculator-button";
-import { ClearButton } from "./button/clear-button";
-import { NumberButton } from "./button/number-button";
-import { ProcessButton } from "./button/process-button";
+import { 
+  CalculatorButton,
+  ClearButton,
+  NumberButton,
+  ProcessButton,
+} from "./button";
+import { 
+  AddButton,
+  CosButton,
+  SinButton,
+  DivideButton,
+  ModButton,
+  FactorialButton,
+  LogButton,
+  MultiplyButton,
+  PowButton,
+  SubscractButton,
+  RadianDegreeToggleButton,
+  OperatorScale,
+} from "./operators";
 import { CalculatorDisplay } from "./calculator-display";
 import { CalculatorExpression } from "./calculator-expression";
 import { CalculatorHistory } from "./calculator-history";
 import { CalculatorHistoryStorage } from "./calculator-storage";
 import { CalculatorModel } from "./calculator-model";
-import { AddButton } from "./operators/AddOperator";
-import { CosButton } from "./operators/CosOperator";
-import { SinButton } from "./operators/SinOperator";
-import { DivideButton } from "./operators/DivideOperator";
-import { ModButton } from "./operators/ModOperator";
-import { FactorialButton } from "./operators/FactorialOperator";
-import { LogButton } from "./operators/LogOperator";
-import { MultiplyButton } from "./operators/MultiplyOperator";
-import { PowButton } from "./operators/PowOperator";
-import { SubscractButton } from "./operators/SubscractOperator";
-import { RadianDegreeToggleButton } from "./operators/RadDegToggleOperator";
 import { injectCss } from "./utils";
-import { OperatorScale } from "./operators/scale";
 
 class Calculator {
   private root: HTMLDivElement;
