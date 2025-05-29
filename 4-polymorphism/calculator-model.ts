@@ -1,11 +1,15 @@
 import type { CalculatorSubscriber } from "./calculator-subscriber";
 import type { BiOperator, UnOperator } from "./operator";
+import type { HistoryStorageSubscriber } from "./history";
+import type { HistoryData } from "./storage";
+import { getOperator } from "./operators/register";
 
 export class CalculatorModel {
   private firstOperand: number | null = null;
   private operator: BiOperator | null = null;
   private secondOperand: number | null = null;
   private subscribers: CalculatorSubscriber[] = [];
+  public readonly historyStorageSubscriber = new HistoryExpressionSubscriber(this);
 
   public addSubscriber(subs: CalculatorSubscriber) {
     this.subscribers.push(subs);
@@ -16,20 +20,20 @@ export class CalculatorModel {
       const firstOperand = parseInt(`${this.firstOperand ?? ""}${digitText}`);
       this.firstOperand = firstOperand;
       this.subscribers.forEach((s) =>
-        s.curentOperandUpdated(firstOperand, "first")
+        s.currentOperandUpdated(firstOperand, "first")
       );
     } else {
       const secondOperand = parseInt(`${this.secondOperand ?? ""}${digitText}`);
       this.secondOperand = secondOperand;
       this.subscribers.forEach((s) =>
-        s.curentOperandUpdated(secondOperand, "second")
+        s.currentOperandUpdated(secondOperand, "second")
       );
     }
   }
 
   public addBiOperator(operator: BiOperator) {
     if (this.firstOperand && this.operator && this.secondOperand) {
-      this.processCaclucation();
+      this.processCalculation();
       this.addBiOperator(operator);
     }
 
@@ -68,7 +72,7 @@ export class CalculatorModel {
     );
   }
 
-  public processCaclucation() {
+  public processCalculation() {
     if (
       this.firstOperand !== null &&
       this.operator &&
@@ -98,5 +102,28 @@ export class CalculatorModel {
     this.firstOperand = null;
     this.operator = null;
     this.subscribers.forEach((s) => s.cleared());
+  }
+
+  public restoreStorageHistory(expressions: string[]) {
+    this.firstOperand = null;
+    this.operator = null;
+    this.secondOperand = null;
+    expressions.forEach(expr => {
+      if (this.firstOperand === null)
+        this.firstOperand = Number(expr);
+      else if (this.operator === null) {
+        this.operator = getOperator(expr) as BiOperator;
+      } else
+        this.secondOperand = Number(expr);
+    });
+  }
+}
+
+class HistoryExpressionSubscriber implements HistoryStorageSubscriber {
+  constructor(private model: CalculatorModel) {}
+
+  getHistory(data: HistoryData): void {
+    console.log(data)
+    this.model.restoreStorageHistory(data.events);
   }
 }

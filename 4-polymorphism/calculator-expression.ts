@@ -1,12 +1,15 @@
-import { BaseCalculatorSubscriber } from "./calculator-subscriber";
-import { type CalculatorSubscriber } from "./calculator-subscriber";
+import type { CalculatorSubscriber } from "./calculator-subscriber";
 import type { BiOperator } from "./operator";
+import type { HistoryData } from "./storage";
+import type { HistoryStorageSubscriber } from "./history";
+import { BaseCalculatorSubscriber } from "./calculator-subscriber";
 import { injectCss } from "./utils";
 
 export class CalculatorExpression {
   private root: HTMLDivElement;
 
   public readonly subscriber = new ExpresssionSubscriber(this);
+  public readonly historyStorageSubscriber = new HistoryExpressionSubscriber(this);
 
   constructor() {
     this.root = this.createRoot();
@@ -19,6 +22,17 @@ export class CalculatorExpression {
 
   public setOperator(firstOperand: number, operator: BiOperator) {
     this.root.innerText = operator.getExpression(firstOperand);
+  }
+
+  public restoreStorageHistory(expressions: string[]) {
+    if (expressions.length === 2)
+      this.root.innerText = expressions.join(' ');
+    else if (expressions.length === 3) {
+      this.root.innerText = expressions.slice(
+        0,
+        expressions.length - 1
+      ).join(' ');
+    }
   }
 
   public clear() {
@@ -66,5 +80,13 @@ class ExpresssionSubscriber
 
   cleared(): void {
     this.expresssion.clear();
+  }
+}
+
+class HistoryExpressionSubscriber implements HistoryStorageSubscriber {
+  constructor(private expression: CalculatorExpression) {}
+
+  getHistory(data: HistoryData): void {
+    this.expression.restoreStorageHistory(data.events);
   }
 }

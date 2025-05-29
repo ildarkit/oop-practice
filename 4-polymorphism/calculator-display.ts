@@ -1,10 +1,13 @@
+import type { HistoryData } from "./storage";
 import type { CalculatorSubscriber } from "./calculator-subscriber";
+import type { HistoryStorageSubscriber } from "./history";
 import { injectCss } from "./utils";
 
 export class CalculatorDisplay {
   private root: HTMLDivElement;
 
   public readonly subscriber = new DisplaySubscriber(this);
+  public readonly historyStorageSubscriber = new HistoryDisplaySubscriber(this);
 
   constructor() {
     this.root = this.createRoot();
@@ -21,6 +24,15 @@ export class CalculatorDisplay {
 
   public clear() {
     this.root.innerText = "0";
+  }
+
+  public restoreStorageHistory(expression: string[]) {
+    let text = "0";
+    if (expression.length === 1)
+      text = expression[0];
+    else if (expression.length === 3)
+      text = expression[2];
+    this.root.innerText = text;
   }
 
   private createRoot() {
@@ -67,5 +79,13 @@ class DisplaySubscriber implements CalculatorSubscriber {
 
   cleared(): void {
     this.display.clear();
+  }
+}
+
+class HistoryDisplaySubscriber implements HistoryStorageSubscriber {
+  constructor(private display: CalculatorDisplay) {}
+
+  getHistory(data: HistoryData): void {
+    this.display.restoreStorageHistory(data.events);
   }
 }

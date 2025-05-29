@@ -41,6 +41,8 @@ class Calculator {
     this.model.addSubscriber(this.storage.subscriber);
 
     this.storage.addSubscriber(this.history.historyStorageSubscriber);
+    this.storage.addSubscriber(this.expression.historyStorageSubscriber);
+    this.storage.addSubscriber(this.display.historyStorageSubscriber);
     this.storage.addSubscriber(this.model.historyStorageSubscriber);
 
     /* prettier-ignore */
