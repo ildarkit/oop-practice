@@ -123,7 +123,6 @@ class HistoryExpressionSubscriber implements HistoryStorageSubscriber {
   constructor(private model: CalculatorModel) {}
 
   getHistory(data: HistoryData): void {
-    console.log(data)
     this.model.restoreStorageHistory(data.events);
   }
 }

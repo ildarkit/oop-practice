@@ -27,7 +27,6 @@ export class CalculatorHistoryStorage {
   public addBiOperator(payload: { operand: string, operator: string }) {
     this.storage.updateAll({ type: 'event', payload: payload.operand });
     this.storage.append({ type: 'event', payload: payload.operator });
-    console.log(payload)
   }
 
   public updateCurrentOperand(payload: string, operandType: OperandType) {
