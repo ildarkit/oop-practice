@@ -1,11 +1,11 @@
 import { CalculatorButton } from "./button/calculator-button";
 import { ClearButton } from "./button/clear-button";
 import { NumberButton } from "./button/number-button";
-
 import { ProcessButton } from "./button/process-button";
 import { CalculatorDisplay } from "./calculator-display";
 import { CalculatorExpression } from "./calculator-expression";
 import { CalculatorHistory } from "./calculator-history";
+import { CalculatorHistoryStorage } from "./calculator-storage";
 import { CalculatorModel } from "./calculator-model";
 import { AddButton } from "./operators/AddOperator";
 import { CosButton } from "./operators/CosOperator";
@@ -25,17 +25,23 @@ class Calculator {
   private expression: CalculatorExpression;
   private model: CalculatorModel;
   private history: CalculatorHistory;
+  private storage: CalculatorHistoryStorage;
   private buttons: CalculatorButton[];
 
   constructor() {
     this.display = new CalculatorDisplay();
     this.expression = new CalculatorExpression();
     this.history = new CalculatorHistory();
+    this.storage = new CalculatorHistoryStorage();
     this.model = new CalculatorModel();
 
     this.model.addSubscriber(this.display.subscriber);
     this.model.addSubscriber(this.expression.subscriber);
     this.model.addSubscriber(this.history.subscriber);
+    this.model.addSubscriber(this.storage.subscriber);
+
+    this.storage.addSubscriber(this.history.historyStorageSubscriber);
+    this.storage.addSubscriber(this.model.historyStorageSubscriber);
 
     /* prettier-ignore */
     this.buttons = [
@@ -94,6 +100,7 @@ class Calculator {
     root.append(buttonsContainer);
 
     this.history.renderTo(root);
+    this.storage.render();
 
     return root;
   }
