@@ -1,15 +1,18 @@
-import {
-  BaseCalculatorSubscriber,
-  type BiOperatorCalculatedEvent,
-  type UnOperatorCalculatedEvent,
-} from "./calculator-subscriber";
-import { type CalculatorSubscriber } from "./calculator-subscriber";
 import type { BiOperator, UnOperator } from "./operator";
+import type { 
+  BiOperatorCalculatedEvent,
+  UnOperatorCalculatedEvent,
+  CalculatorSubscriber
+} from "./calculator-subscriber";
+import type { HistoryStorageSubscriber } from "./history";
+import type { HistoryData } from "./storage";
+import { BaseCalculatorSubscriber } from "./calculator-subscriber";
 import { createElementFromHTML, injectCss } from "./utils";
 
 export class CalculatorHistory {
   private root: HTMLDivElement;
-  public subscriber = new HistorySubscriber(this);
+  public readonly subscriber = new HistorySubscriber(this);
+  public readonly historyStorageSubscriber = new StorageSubscriber(this);
 
   constructor() {
     this.root = this.createRoot();
@@ -42,6 +45,10 @@ export class CalculatorHistory {
       `);
 
     this.root.append(historyItem);
+  }
+
+  public restoreStorageHistory(history: string[]) {
+    history.forEach(s => this.root.append(createElementFromHTML(s)));
   }
 
   private createRoot() {
@@ -81,8 +88,7 @@ export class CalculatorHistory {
       .calculator_history-item.error {
         color: #e74c3c;
         font-weight: bold;
-      }
-          `,
+      }`,
       "calculator_history"
     );
   }
@@ -106,5 +112,13 @@ class HistorySubscriber
 
   unOperatorCalculated(event: UnOperatorCalculatedEvent): void {
     this.history.addUnOperation(event.operand, event.operator);
+  }
+}
+
+class StorageSubscriber implements HistoryStorageSubscriber {
+  constructor(private history: CalculatorHistory) {}
+
+  getHistory(data: HistoryData): void {
+    this.history.restoreStorageHistory(data.history);
   }
 }
