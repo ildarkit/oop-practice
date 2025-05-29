@@ -17,7 +17,9 @@ import { LogButton } from "./operators/LogOperator";
 import { MultiplyButton } from "./operators/MultiplyOperator";
 import { PowButton } from "./operators/PowOperator";
 import { SubscractButton } from "./operators/SubscractOperator";
+import { RadianDegreeToggleButton } from "./operators/RadDegToggleOperator";
 import { injectCss } from "./utils";
+import { OperatorScale } from "./operators/scale";
 
 class Calculator {
   private root: HTMLDivElement;
@@ -27,6 +29,7 @@ class Calculator {
   private history: CalculatorHistory;
   private storage: CalculatorHistoryStorage;
   private buttons: CalculatorButton[];
+  private operatorScale: OperatorScale;
 
   constructor() {
     this.display = new CalculatorDisplay();
@@ -34,6 +37,7 @@ class Calculator {
     this.history = new CalculatorHistory();
     this.storage = new CalculatorHistoryStorage();
     this.model = new CalculatorModel();
+    this.operatorScale = new OperatorScale();
 
     this.model.addSubscriber(this.display.subscriber);
     this.model.addSubscriber(this.expression.subscriber);
@@ -64,8 +68,8 @@ class Calculator {
       new DivideButton(this.model),
       // 4 row
       new NumberButton("0", this.model),
-      new CosButton(this.model),
-      new SinButton(this.model),
+      new CosButton(this.model, this.operatorScale),
+      new SinButton(this.model, this.operatorScale),
       new MultiplyButton(this.model),
       // 5 row
       new PowButton(this.model),
@@ -75,6 +79,7 @@ class Calculator {
       // 6 row
       new FactorialButton(this.model),
       new LogButton(this.model),
+      new RadianDegreeToggleButton(this.operatorScale),
     ];
 
     this.root = this.createRoot();

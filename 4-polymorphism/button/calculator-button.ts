@@ -23,6 +23,10 @@ export abstract class CalculatorButton {
     container.append(this.root);
   }
 
+  public setText(text: string) {
+    this.root.innerText = text;
+  }
+
   private createRoot(text: string) {
     const root = document.createElement("button");
     root.classList.add("calculator_button");
