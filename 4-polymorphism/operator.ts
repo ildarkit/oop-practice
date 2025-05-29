@@ -1,4 +1,7 @@
+export type BiOperatorName = 'add' | 'substruct' | 'divide' | 'multiply' | 'mod' | 'pow';
+
 export interface BiOperator {
+  name: BiOperatorName;
   calculate(firstOperand: number, secondOperand: number): number;
   getExpression(firstOperand: number): string;
   getHistoryText(firstOperand: number, secondOperand: number): string;

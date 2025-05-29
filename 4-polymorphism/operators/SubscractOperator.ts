@@ -1,8 +1,11 @@
 import { CalculatorButton } from "../button/calculator-button";
 import type { CalculatorModel } from "../calculator-model";
-import type { BiOperator } from "../operator";
+import type { BiOperator, BiOperatorName } from "../operator";
+import { registerOperator } from "./register";
 
 class SubscractOperator implements BiOperator {
+  public name: BiOperatorName = 'substruct';
+
   calculate(firstOperand: number, secondOperand: number): number {
     return firstOperand - secondOperand;
   }
@@ -21,11 +24,17 @@ class SubscractOperator implements BiOperator {
 }
 
 export class SubscractButton extends CalculatorButton {
+  private static operator = new SubscractOperator();
+
   constructor(private model: CalculatorModel) {
     super("-");
+    registerOperator({
+      name: SubscractButton.operator.name,
+      operator: SubscractButton.operator,
+    });
   }
 
   onClick() {
-    this.model.addBiOperator(new SubscractOperator());
+    this.model.addBiOperator(SubscractButton.operator);
   }
 }

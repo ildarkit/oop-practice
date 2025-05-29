@@ -1,8 +1,11 @@
 import { CalculatorButton } from "../button/calculator-button";
 import type { CalculatorModel } from "../calculator-model";
-import type { BiOperator } from "../operator";
+import type { BiOperator, BiOperatorName } from "../operator";
+import { registerOperator } from "./register";
 
 class PowOperator implements BiOperator {
+  public name: BiOperatorName = 'pow';
+
   calculate(firstOperand: number, secondOperand: number): number {
     return firstOperand ** secondOperand;
   }
@@ -21,11 +24,17 @@ class PowOperator implements BiOperator {
 }
 
 export class PowButton extends CalculatorButton {
+  private static operator = new PowOperator();
+
   constructor(private model: CalculatorModel) {
     super("^");
+    registerOperator({
+      name: PowButton.operator.name,
+      operator: PowButton.operator,
+    });
   }
 
   onClick() {
-    this.model.addBiOperator(new PowOperator());
+    this.model.addBiOperator(PowButton.operator);
   }
 }

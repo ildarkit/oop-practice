@@ -1,8 +1,11 @@
 import { CalculatorButton } from "../button/calculator-button";
 import type { CalculatorModel } from "../calculator-model";
-import type { BiOperator } from "../operator";
+import type { BiOperator, BiOperatorName} from "../operator";
+import { registerOperator } from "./register";
 
 class ModOperator implements BiOperator {
+  public name: BiOperatorName = 'mod';
+
   calculate(firstOperand: number, secondOperand: number): number {
     return firstOperand % secondOperand;
   }
@@ -21,11 +24,17 @@ class ModOperator implements BiOperator {
 }
 
 export class ModButton extends CalculatorButton {
+  private static operator = new ModOperator();
+
   constructor(private model: CalculatorModel) {
     super("mod");
+    registerOperator({
+      name: ModButton.operator.name,
+      operator: ModButton.operator,
+    });
   }
 
   onClick() {
-    this.model.addBiOperator(new ModOperator());
+    this.model.addBiOperator(ModButton.operator);
   }
 }

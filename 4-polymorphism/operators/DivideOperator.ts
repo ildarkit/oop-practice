@@ -1,8 +1,11 @@
 import { CalculatorButton } from "../button/calculator-button";
 import type { CalculatorModel } from "../calculator-model";
-import type { BiOperator } from "../operator";
+import type { BiOperator, BiOperatorName} from "../operator";
+import { registerOperator } from "./register";
 
 class DivideOperator implements BiOperator {
+  public name: BiOperatorName = 'divide';
+
   calculate(firstOperand: number, secondOperand: number): number {
     return firstOperand / secondOperand;
   }
@@ -21,11 +24,17 @@ class DivideOperator implements BiOperator {
 }
 
 export class DivideButton extends CalculatorButton {
+  private static operator = new DivideOperator();
+
   constructor(private model: CalculatorModel) {
     super("/");
+    registerOperator({
+      name: DivideButton.operator.name,
+      operator: DivideButton.operator,
+    });
   }
 
   onClick() {
-    this.model.addBiOperator(new DivideOperator());
+    this.model.addBiOperator(DivideButton.operator);
   }
 }
