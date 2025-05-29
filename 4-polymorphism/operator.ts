@@ -1,4 +1,4 @@
-export type BiOperatorName = 'add' | 'substruct' | 'divide' | 'multiply' | 'mod' | 'pow';
+export type BiOperatorName = '+' | '-' | '/' | '*' | '%' | '^';
 
 export interface BiOperator {
   name: BiOperatorName;

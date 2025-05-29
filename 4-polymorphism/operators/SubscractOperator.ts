@@ -4,7 +4,7 @@ import type { BiOperator, BiOperatorName } from "../operator";
 import { registerOperator } from "./register";
 
 class SubscractOperator implements BiOperator {
-  public name: BiOperatorName = 'substruct';
+  public name: BiOperatorName = '-';
 
   calculate(firstOperand: number, secondOperand: number): number {
     return firstOperand - secondOperand;
